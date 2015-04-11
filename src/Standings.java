@@ -95,14 +95,14 @@ public class Standings{
 		this.fileAddress = fileAddress;
     	Import = true;
     	
-    	number = Integer.parseInt(fileAddress.split("/",4)[3].split(".xls", 2)[0]);
+    	number = Integer.parseInt(fileAddress.split(".xls", 2)[0]);
     	Captions(number);
 	}
     
   	public void export(String fileAddress) {
         try {
         	WritableWorkbook workbook = Workbook.createWorkbook(new File(fileAddress), 
-        			Workbook.getWorkbook(new File("c:/Java projects/Standings/" + number + ".xls")));
+        			Workbook.getWorkbook(new File(number + ".xls")));
         	WritableSheet sheet = workbook.getSheet(0);
         	WritableFont font =
         			new WritableFont(WritableFont.ARIAL, 10, WritableFont.NO_BOLD);
