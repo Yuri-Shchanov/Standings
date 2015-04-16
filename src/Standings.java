@@ -38,7 +38,7 @@ public class Standings{
 		this.number = number;
 	}
 		
-	private void Captions(int number) throws BiffException, IOException, RowsExceededException, WriteException{
+	private void Captions(int number) {
 		col = new Integer[number * 2];
 		row = new Integer[number * 2];
 		player = new String[number * 2];
@@ -46,7 +46,12 @@ public class Standings{
 		Workbook wrk1 = null;
 		Sheet sheet1 = null;
 		if (Import){
-			wrk1 =  Workbook.getWorkbook(new File(fileAddress));
+			try {
+				wrk1 =  Workbook.getWorkbook(new File(fileAddress));
+			} catch (BiffException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			sheet1 = wrk1.getSheet(0);
 		}
 		int count = number;
@@ -65,8 +70,6 @@ public class Standings{
 				row1 = rowch - 1;
 				rowch *= 2;
 			}
-			
-			
 		}
 		if(Import){
 			wrk1.close();
@@ -79,6 +82,19 @@ public class Standings{
 	}
 	
 	void setScore(int slot1, int slot2, String score){
+		if (Math.abs(slot1 - slot2) != 1 )
+			try {
+				throw new Exception("Invalid format of slots");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		if (slot1 > slot2) 
+			try {
+				throw new Exception("First must be first");
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			
 		int slot = slot2 / 2 + 128;
 		int score1 = Integer.parseInt(score.split(":", 2)[0]);
 		int score2 = Integer.parseInt(score.split(":", 2)[1]);
